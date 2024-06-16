@@ -31,7 +31,7 @@ public class AccountRepositoryTests {
     private CoinRepository coinRepository;
 
     @Test
-    void givenAccountToCreate_whenSave_thenAccountCreated() {
+    void givenAccountToCreate_whenSave_thenAccountIsCreated() {
         //given
         Coin coin = Coin.builder()
                 .code("100")
@@ -69,7 +69,7 @@ public class AccountRepositoryTests {
     }
 
     @Test
-    public void givenAccountToUpdate_whenSave_thenAccountUpdated() {
+    public void givenAccountToUpdate_whenSave_thenAccountIsUpdated() {
         //given
         Coin coin = Coin.builder()
                 .code("100")
@@ -112,7 +112,7 @@ public class AccountRepositoryTests {
     }
 
     @Test
-    public void givenAccountId_whenFindById_thenAccountFound() {
+    public void givenAccountId_whenFindById_thenAccountIsFound() {
         //given
         Coin coin = Coin.builder()
                 .code("100")

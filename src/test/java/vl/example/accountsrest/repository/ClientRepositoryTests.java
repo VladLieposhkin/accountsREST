@@ -23,7 +23,7 @@ class ClientRepositoryTests {
     private ClientRepository clientRepository;
 
     @Test
-    void givenClientToCreate_whenSave_thenClientCreated() {
+    void givenClientToCreate_whenSave_thenClientIsCreated() {
         //given
         Client clientToCreate = Client.builder()
                 .name("TEST_CLIENT")
@@ -41,7 +41,7 @@ class ClientRepositoryTests {
     }
 
     @Test
-    public void givenClientToUpdate_whenSave_thenClientUpdated() {
+    public void givenClientToUpdate_whenSave_thenClientIsUpdated() {
         //given
         Client clientToCreate = Client.builder()
                 .name("TEST_CLIENT")
@@ -65,7 +65,7 @@ class ClientRepositoryTests {
     }
 
     @Test
-    public void givenClientId_whenFindById_thenClientFound() {
+    public void givenClientId_whenFindById_thenClientIsFound() {
         //given
         Client clientToCreate = Client.builder()
                 .name("TEST_CLIENT")

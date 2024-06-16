@@ -23,7 +23,7 @@ class CoinRepositoryTests {
     private CoinRepository coinRepository;
 
     @Test
-    void givenCoinToCreate_whenSave_thenCoinCreated() {
+    void givenCoinToCreate_whenSave_thenCoinIsCreated() {
         //given
         Coin coinToCreate = Coin.builder()
                 .code("100")
@@ -43,7 +43,7 @@ class CoinRepositoryTests {
     }
 
     @Test
-    public void givenCoinToUpdate_whenSave_thenCoinUpdated() {
+    public void givenCoinToUpdate_whenSave_thenCoinIsUpdated() {
         //given
         Coin coinToCreate = Coin.builder()
                 .code("100")
@@ -67,7 +67,7 @@ class CoinRepositoryTests {
     }
 
     @Test
-    public void givenCoinId_whenFindById_thenCoinFound() {
+    public void givenCoinId_whenFindById_thenCoinIsFound() {
         //given
         Coin coinToCreate = Coin.builder()
                 .code("100")
