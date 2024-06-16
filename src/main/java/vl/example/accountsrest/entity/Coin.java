@@ -19,7 +19,7 @@ public class Coin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
 
     @Column(name = "c_code")
     private String code;
@@ -28,16 +28,16 @@ public class Coin {
     private String name;
 
     @Column(name = "c_price")
-    private Double price;
+    private Float price;
 
     @Column(name = "c_change1h")
-    private Double change1h;
+    private Float change1h;
 
     @Column(name = "c_change24h")
-    private Double change24h;
+    private Float change24h;
 
     @Column(name = "c_change7d")
-    private Double change7d;
+    private Float change7d;
 
     @Column(name = "c_created_at")
     private LocalDateTime createdAt;

@@ -16,7 +16,7 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
@@ -30,13 +30,13 @@ public class Account {
     private String number;
 
     @Column(name = "c_quantity")
-    private Double quantity;
+    private Float quantity;
 
     @Column(name = "c_price")
-    private Double price;
+    private Float price;
 
     @Column(name = "c_amount")
-    private Double amount;
+    private Float amount;
 
     @Column(name = "c_created_at")
     private LocalDateTime createdAt;
