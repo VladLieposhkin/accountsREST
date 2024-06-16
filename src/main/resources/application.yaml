@@ -1,0 +1,20 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name:  accountsREST
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/accounts
+    username:  accounts
+    password:  accounts
+
+  flyway:
+    schemas:
+      - public
+      - accounts
+
+  jpa:
+    open-in-view: false
+
