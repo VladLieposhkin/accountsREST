@@ -25,6 +25,17 @@ public class ClientServiceImpl implements ClientService {
     private final ClientMapper clientMapper;
     private final ClientDetailedMapper clientDetailedMapper;
 
+    @Transactional
+    @Override
+    public ClientDTO create(ClientDTO clientDTO) {
+
+        return Optional.of(clientDTO)
+                .map(clientMapper::fromDTO)
+                .map(clientRepository::save)
+                .map(clientMapper::toDTO)
+                .orElseThrow();
+    }
+
     @Override
     public List<ClientDTO> findAll() {
 
@@ -48,17 +59,6 @@ public class ClientServiceImpl implements ClientService {
 //                .map(clientDetailedMapper::toDetailedDTO)
 //                .orElseThrow(() -> new CustomNotFoundException(NOT_FOUND + clientId));
 //    }
-
-    @Transactional
-    @Override
-    public ClientDTO create(ClientDTO clientDTO) {
-
-        return Optional.of(clientDTO)
-                .map(clientMapper::fromDTO)
-                .map(clientRepository::save)
-                .map(clientMapper::toDTO)
-                .orElseThrow();
-    }
 
     @Transactional
     @Override

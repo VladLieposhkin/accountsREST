@@ -67,7 +67,6 @@ class CoinServiceImplTests {
                 .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
-
         BDDMockito.given(coinMapper.fromDTO(any(CoinDTO.class)))
                 .willReturn(coinToCreate);
         BDDMockito.given(coinRepository.save(coinToCreate))
@@ -85,7 +84,6 @@ class CoinServiceImplTests {
     void givenCorrectId_whenFindOne_thenCoinIsFound() {
         // given
         Integer coinId = 1;
-
         Coin foundCoin = Coin.builder()
                 .id(1)
                 .code("100")
@@ -102,7 +100,6 @@ class CoinServiceImplTests {
                 .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
-
         BDDMockito.given(coinRepository.findById(anyInt()))
                 .willReturn(Optional.of(foundCoin));
         BDDMockito.given(coinMapper.toDTO(foundCoin))
@@ -118,7 +115,6 @@ class CoinServiceImplTests {
     void givenIncorrectId_whenFindOne_thenExceptionIsThrown() {
         // given
         Integer coinId = -1;
-
         BDDMockito.given(coinRepository.findById(anyInt()))
                 .willThrow(new CustomNotFoundException("Coin with ID " + coinId + "not found"));
         // when
@@ -139,7 +135,6 @@ class CoinServiceImplTests {
                 .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
-
         Coin coinToUpdate = Coin.builder()
                 .id(1)
                 .code("100")
@@ -148,7 +143,6 @@ class CoinServiceImplTests {
                 .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
-
         CoinDTO updatedCoinDTO = CoinDTO.builder()
                 .id(1)
                 .code("100")
@@ -157,7 +151,6 @@ class CoinServiceImplTests {
                 .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
-
         BDDMockito.given(coinRepository.findById(anyInt()))
                 .willReturn(Optional.of(coinToUpdate));
         BDDMockito.given(coinMapper.fromDTO(any(CoinDTO.class), any(Coin.class)))
@@ -170,14 +163,13 @@ class CoinServiceImplTests {
         CoinDTO result = service.update(coinToUpdateDTO, coinId);
         // then
         assertThat(result).isNotNull();
-        verify(coinRepository, times(1)).saveAndFlush(any(Coin.class));
+        verify(coinRepository, times(1)).saveAndFlush(coinToUpdate);
     }
 
     @Test
     void givenIncorrectIdAndCoinToUpdateDTO_whenUpdate_thenExceptionIsThrown() {
         // given
         Integer coinId = -1;
-
         CoinDTO coinToUpdateDTO = CoinDTO.builder()
                 .id(1)
                 .code("100")
@@ -186,13 +178,11 @@ class CoinServiceImplTests {
                 .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
-
         BDDMockito.given(coinRepository.findById(anyInt()))
                 .willThrow(new CustomNotFoundException("Coin with ID " + coinId + "not found"));
-
         // when
-        assertThrows(CustomNotFoundException.class, () -> service.update(coinToUpdateDTO, coinId));
         // then
+        assertThrows(CustomNotFoundException.class, () -> service.update(coinToUpdateDTO, coinId));
         verify(coinRepository, never()).saveAndFlush(any(Coin.class));
     }
 }
