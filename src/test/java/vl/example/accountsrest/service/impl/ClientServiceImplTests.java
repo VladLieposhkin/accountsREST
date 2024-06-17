@@ -15,11 +15,10 @@ import vl.example.accountsrest.mapper.ClientDetailedMapper;
 import vl.example.accountsrest.mapper.ClientMapper;
 import vl.example.accountsrest.repository.ClientRepository;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
@@ -40,36 +39,29 @@ class ClientServiceImplTests {
     @InjectMocks
     private ClientServiceImpl service;
 
+    @Test
     void givenClientToCreateDTO_whenCreate_thenClientIsCreated() {
         // given
         ClientDTO clientToCreateDTO = ClientDTO.builder()
                 .name("TEST_CLIENT")
                 .email("TC@mail.com")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
         Client clientToCreate = Client.builder()
                 .name("TEST_CLIENT")
                 .email("TC@mail.com")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
         Client createdClient = Client.builder()
                 .id(1)
                 .name("TEST_CLIENT")
                 .email("TC@mail.com")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
         ClientDTO createdClientDTO = ClientDTO.builder()
                 .id(1)
                 .name("TEST_CLIENT")
                 .email("TC@mail.com")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
 
@@ -87,23 +79,19 @@ class ClientServiceImplTests {
     }
 
     @Test
-    void givenCorrectId_whenFindOne_thenClientIsReturned() {
+    void givenCorrectId_whenFindOne_thenClientIsFound() {
         // given
         Integer clientId = 1;
         Client foundClient = Client.builder()
                 .id(1)
                 .name("TEST_CLIENT")
                 .email("TC@mail.com")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
         ClientDTO foundClientDTO = ClientDTO.builder()
                 .id(1)
                 .name("TEST_CLIENT")
                 .email("TC@mail.com")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
         BDDMockito.given(clientMapper.toDTO(any(Client.class)))
@@ -136,32 +124,24 @@ class ClientServiceImplTests {
                 .id(1)
                 .name("TEST_CLIENT")
                 .email("TC@mail.com")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
         Client clientToUpdate = Client.builder()
                 .id(1)
                 .name("TEST_CLIENT")
                 .email("TC@mail.com")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
         Client updatedClient = Client.builder()
                 .id(1)
                 .name("TEST_CLIENT")
                 .email("TC@mail.com")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
         ClientDTO updatedClientDTO = ClientDTO.builder()
                 .id(1)
                 .name("TEST_CLIENT")
                 .email("TC@mail.com")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
         BDDMockito.given(clientRepository.findById(anyInt()))
@@ -187,8 +167,6 @@ class ClientServiceImplTests {
                 .id(1)
                 .name("TEST_CLIENT")
                 .email("TC@mail.com")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
         BDDMockito.given(clientRepository.findById(anyInt()))
