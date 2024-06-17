@@ -1,6 +1,7 @@
 package vl.example.accountsrest.service;
 
 import vl.example.accountsrest.dto.CoinDTO;
+import vl.example.accountsrest.entity.Coin;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ public interface CoinService {
     boolean checkById(Integer coinId);
     boolean checkByCode(String code, Integer coinId);
     boolean checkByName(String name, Integer coinId);
-//    Coin updateByCode(Coin coin);
+    Coin updateByCode(Coin coin);
 }

@@ -93,18 +93,18 @@ public class CoinServiceImpl implements CoinService {
 
         return coinRepository.checkByNameAndId(name, coinId).isPresent();
     }
-//
-//    @Transactional
-//    @Override
-//    public Coin updateByCode(Coin coin) {
-//
-//        var storedCoin = coinRepository.findByCode(coin.getCode())
-//                .orElseThrow(() -> new CustomNotFoundException(NOT_FOUND + coin.getId()));
-//
-//        coin.setId(storedCoin.getId());
-//        coin.setCreatedAt(storedCoin.getCreatedAt());
-//
-//        coinRepository.save(coin);
-//        return coin;
-//    }
+
+    @Transactional
+    @Override
+    public Coin updateByCode(Coin coin) {
+
+        Coin storedCoin = coinRepository.findByCode(coin.getCode())
+                .orElseThrow(() -> new CustomNotFoundException(NOT_FOUND + coin.getId()));
+
+        coin.setId(storedCoin.getId());
+        coin.setCreatedAt(storedCoin.getCreatedAt());
+
+        coinRepository.save(coin);
+        return coin;
+    }
 }

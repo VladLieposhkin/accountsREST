@@ -1,12 +1,11 @@
-package vl.example.accountsrest.job;
+package vl.example.accountsrest.external;
 
-import vl.example.accountsrest.service.AccountService;
-import vl.example.accountsrest.service.CoinService;
-import vl.example.accountsrest.service.ExternalService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import vl.example.accountsrest.service.AccountService;
+import vl.example.accountsrest.service.CoinService;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -14,9 +13,9 @@ import java.util.concurrent.TimeUnit;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class ProcessScheduledJob {
+public class ExternalDataProcessingJob {
 
-    private final ExternalService externalService;
+    private final ExternalClient externalClient;
     private final CoinService coinService;
     private final AccountService accountService;
 
@@ -25,21 +24,21 @@ public class ProcessScheduledJob {
 
         log.info("RETRIEVING: Started...");
 
-//        CompletableFuture.supplyAsync(externalService::getExternalData)
-//                .thenApply(list ->
-//                                list.stream()
-//                                        .map(CoinModel::toCoin)
-//                                        .peek(coinService::updateByCode)
-//                                        .peek(accountService::updateByCoin)
-//                                        .toList()
-//                                        .size()
-//                )
-//                .exceptionally(exception -> {
-//                    log.info("RETRIEVING: Unable to process data from remote host, {}", exception.getMessage());
-//                    return 0;
-//                })
-//                .thenAccept(result -> log.info("RETRIEVING: Data about {} coins processed", result))
-//                .join();
+        CompletableFuture.supplyAsync(externalClient::getExternalData)
+                .thenApply(list ->
+                                list.stream()
+                                        .map(CoinModel::toCoin)
+                                        .peek(coinService::updateByCode)
+                                        .peek(accountService::updateByCoin)
+                                        .toList()
+                                        .size()
+                )
+                .exceptionally(exception -> {
+                    log.info("RETRIEVING: Unable to process data from remote host, {}", exception.getMessage());
+                    return 0;
+                })
+                .thenAccept(result -> log.info("RETRIEVING: Data about {} coins processed", result))
+                .join();
     }
 
     @Scheduled(fixedDelay = 60, initialDelay = 10, timeUnit = TimeUnit.SECONDS)

@@ -1,6 +1,7 @@
 package vl.example.accountsrest.service;
 
 import vl.example.accountsrest.dto.AccountDTO;
+import vl.example.accountsrest.entity.Coin;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ public interface AccountService {
     AccountDTO update(AccountDTO accountDTO, Integer accountId);
     void delete(Integer accountId);
     boolean checkByNumber(String accountNumber, Integer accountId);
-//    void updateByCoin(Coin coin);
+    void updateByCoin(Coin coin);
 }

@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class CustomBadRequestException extends RuntimeException {
+
     List<String> errors = new ArrayList<>();
 
     public CustomBadRequestException(List<String> errors) {

@@ -18,4 +18,6 @@ public interface CoinRepository extends JpaRepository<Coin, Integer> {
     Optional<Coin> checkByNameAndId(@Param("name") String name, @Param("id") Integer id);
 
     boolean existsById(Integer coinId);
+
+    Optional<Coin> findByCode(String code);
 }

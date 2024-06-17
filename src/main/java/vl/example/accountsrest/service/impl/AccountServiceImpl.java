@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vl.example.accountsrest.dto.AccountDTO;
 import vl.example.accountsrest.entity.Account;
+import vl.example.accountsrest.entity.Coin;
 import vl.example.accountsrest.entity.Status;
 import vl.example.accountsrest.exception.CustomNotFoundException;
 import vl.example.accountsrest.mapper.AccountMapper;
@@ -81,11 +82,11 @@ public class AccountServiceImpl implements AccountService {
 
         return accountRepository.checkByNumberAndId(accountNumber, accountId).isPresent();
     }
-//
-//    @Transactional
-//    @Override
-//    public void updateByCoin(Coin coin) {
-//
-//        accountRepository.updateAccountsByCoin(coin, coin.getPrice());
-//    }
+
+    @Transactional
+    @Override
+    public void updateByCoin(Coin coin) {
+
+        accountRepository.updateAccountsByCoin(coin, coin.getPrice());
+    }
 }

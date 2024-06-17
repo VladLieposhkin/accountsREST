@@ -1,6 +1,13 @@
 server:
   port: 8081
 
+accounts:
+  services:
+    external:
+      url:  https://api.coinlore.net/api/ticker
+
+
+
 spring:
   application:
     name:  accountsREST
@@ -20,5 +27,5 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: validate
-    show-sql: true
+#    show-sql: true
 
