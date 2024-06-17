@@ -11,6 +11,6 @@ public interface AccountService {
     AccountDTO create(AccountDTO accountDTO);
     AccountDTO update(AccountDTO accountDTO, Integer accountId);
     void delete(Integer accountId);
-//    boolean checkByNumber(String number, Long id);
+    boolean checkByNumber(String accountNumber, Integer accountId);
 //    void updateByCoin(Coin coin);
 }

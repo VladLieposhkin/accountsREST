@@ -1,15 +1,14 @@
 package vl.example.accountsrest.rest;
 
-import vl.example.accountsrest.dto.ClientDTO;
-import vl.example.accountsrest.dto.ClientDetailedDTO;
-import vl.example.accountsrest.service.ClientService;
-import vl.example.accountsrest.validator.ClientValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import vl.example.accountsrest.dto.ClientDTO;
+import vl.example.accountsrest.service.ClientService;
+import vl.example.accountsrest.validator.ClientValidator;
 
 import java.util.List;
 
@@ -38,7 +37,6 @@ public class ClientControllerV1 {
     @PostMapping
     public ResponseEntity<ClientDTO> create(@RequestBody @Valid ClientDTO clientDTO,
                                             BindingResult bindingResult) {
-
         clientValidator.validate(clientDTO, bindingResult);
         return new ResponseEntity<>(clientService.create(clientDTO), HttpStatus.CREATED);
     }
@@ -47,7 +45,6 @@ public class ClientControllerV1 {
     public ResponseEntity<ClientDTO> update(@PathVariable("id") Integer clientId,
                                             @RequestBody @Valid ClientDTO clientDTO,
                                             BindingResult bindingResult) {
-
         clientValidator.validate(clientDTO, bindingResult);
         return new ResponseEntity<>(clientService.update(clientDTO, clientId), HttpStatus.OK);
     }
@@ -58,5 +55,4 @@ public class ClientControllerV1 {
         clientService.delete(clientId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

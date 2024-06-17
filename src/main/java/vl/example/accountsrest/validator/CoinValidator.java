@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -27,18 +29,17 @@ public class CoinValidator implements Validator {
 
         CoinDTO coinDTO = (CoinDTO) target;
 
-//        if (coinService.checkByCode(coinDTO.getCode(), coinDTO.getId()))
-//            errors.rejectValue("code", "", "Coin with same Code already present");
-//
-//        if (coinService.checkByName(coinDTO.getName(), coinDTO.getId()))
-//            errors.rejectValue("name", "", "Coin with same Name already present");
+        if (coinService.checkByCode(coinDTO.getCode(), coinDTO.getId()))
+            errors.rejectValue("code", "", "Coin with same Code already present");
+
+        if (coinService.checkByName(coinDTO.getName(), coinDTO.getId()))
+            errors.rejectValue("name", "", "Coin with same Name already present");
 
         if (errors.hasErrors()) {
-            String errorMessage = errors.getFieldErrors().stream()
-                    .map(e -> String.join(" - ", e.getField(), e.getDefaultMessage()))
-                    .collect(Collectors.joining("\n"));
-
-            throw new CustomBadRequestException(errorMessage);
+            List<String> bindingErrors = errors.getFieldErrors().stream()
+                    .map(e -> e.getDefaultMessage())
+                    .toList();
+            throw new CustomBadRequestException("BAD REQUEST", bindingErrors);
         }
     }
 }

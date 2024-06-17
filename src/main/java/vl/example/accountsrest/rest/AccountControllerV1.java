@@ -24,7 +24,6 @@ public class AccountControllerV1 {
     @PostMapping
     public ResponseEntity<AccountDTO> create(@RequestBody @Valid AccountDTO accountDTO,
                                              BindingResult bindingResult) {
-
         accountValidator.validate(accountDTO, bindingResult);
         return new ResponseEntity<>(accountService.create(accountDTO), HttpStatus.CREATED);
     }
@@ -45,7 +44,6 @@ public class AccountControllerV1 {
     public ResponseEntity<AccountDTO> update(@PathVariable("id") Integer accountId,
                                              @RequestBody @Valid AccountDTO accountDTO,
                                              BindingResult bindingResult) {
-
         accountValidator.validate(accountDTO, bindingResult);
         return new ResponseEntity<>(accountService.update(accountDTO, accountId), HttpStatus.OK);
     }

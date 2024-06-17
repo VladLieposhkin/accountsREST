@@ -76,11 +76,11 @@ public class AccountServiceImpl implements AccountService {
         else throw new CustomNotFoundException(NOT_FOUND + accountId);
     }
 
-//    @Override
-//    public boolean checkByNumber(String number, Long id) {
-//
-//        return accountRepository.checkByNumberAndId(number, id).isPresent();
-//    }
+    @Override
+    public boolean checkByNumber(String accountNumber, Integer accountId) {
+
+        return accountRepository.checkByNumberAndId(accountNumber, accountId).isPresent();
+    }
 //
 //    @Transactional
 //    @Override

@@ -85,16 +85,21 @@ public class ClientServiceImpl implements ClientService {
         else throw new CustomNotFoundException(NOT_FOUND + clientId);
     }
 
-//    @Override
-//    public boolean checkByEmail(String email, Long id) {
-//
-//        return clientRepository.checkByEmailAndId(email, id).isPresent();
-//    }
-//
-//    @Override
-//    public boolean checkByName(String name, Long id) {
-//
-//        return clientRepository.checkByNameAndId(name, id).isPresent();
-//    }
+    @Override
+    public boolean checkById(Integer clientId) {
 
+        return clientRepository.existsById(clientId);
+    }
+
+    @Override
+    public boolean checkByEmail(String email, Integer id) {
+
+        return clientRepository.checkByEmailAndId(email, id).isPresent();
+    }
+
+    @Override
+    public boolean checkByName(String name, Integer id) {
+
+        return clientRepository.checkByNameAndId(name, id).isPresent();
+    }
 }

@@ -12,6 +12,7 @@ import vl.example.accountsrest.mapper.CoinMapper;
 import vl.example.accountsrest.repository.CoinRepository;
 import vl.example.accountsrest.service.CoinService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,7 +49,7 @@ public class CoinServiceImpl implements CoinService {
                 .map(coinMapper::fromDTO)
                 .map(coinRepository::save)
                 .map(coinMapper::toDTO)
-                .orElseThrow(() -> new CustomBadRequestException("BAD REQUEST"));
+                .orElseThrow(() -> new CustomBadRequestException("Can't create Coin", Collections.EMPTY_LIST));
     }
 
     @Transactional
@@ -76,17 +77,22 @@ public class CoinServiceImpl implements CoinService {
         else throw new CustomNotFoundException(NOT_FOUND + coinId);
     }
 
-//    @Override
-//    public boolean checkByCode(String code, Integer coinId) {
-//
-//        return coinRepository.checkByCodeAndId(code, coinId).isPresent();
-//    }
-//
-//    @Override
-//    public boolean checkByName(String name, Integer coinId) {
-//
-//        return coinRepository.checkByNameAndId(name, coinId).isPresent();
-//    }
+    @Override
+    public boolean checkById(Integer coinId) {
+        return coinRepository.existsById(coinId);
+    }
+
+    @Override
+    public boolean checkByCode(String code, Integer coinId) {
+
+        return coinRepository.checkByCodeAndId(code, coinId).isPresent();
+    }
+
+    @Override
+    public boolean checkByName(String name, Integer coinId) {
+
+        return coinRepository.checkByNameAndId(name, coinId).isPresent();
+    }
 //
 //    @Transactional
 //    @Override

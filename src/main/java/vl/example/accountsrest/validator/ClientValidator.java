@@ -8,6 +8,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import vl.example.accountsrest.exception.CustomBadRequestException;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -27,18 +29,17 @@ public class ClientValidator implements Validator {
 
         ClientDTO clientDTO = (ClientDTO) target;
 
-//        if (clientService.checkByEmail(clientDTO.getEmail(), clientDTO.getId()))
-//            errors.rejectValue("email", "", "Client with same Email already present");
-//
-//        if (clientService.checkByName(clientDTO.getName(), clientDTO.getId()))
-//            errors.rejectValue("name", "", "Client with same Name already present");
+        if (clientService.checkByName(clientDTO.getName(), clientDTO.getId()))
+            errors.rejectValue("name", "", "Client with same Name already present");
+
+        if (clientService.checkByEmail(clientDTO.getEmail(), clientDTO.getId()))
+            errors.rejectValue("email", "", "Client with same Email already present");
 
         if (errors.hasErrors()) {
-            String errorMessage = errors.getFieldErrors().stream()
-                    .map(e -> String.join(" - ", e.getField(), e.getDefaultMessage()))
-                    .collect(Collectors.joining("\n"));
-
-            throw new CustomBadRequestException(errorMessage);
+            List<String> bindingErrors = errors.getFieldErrors().stream()
+                    .map(e -> e.getDefaultMessage())
+                    .toList();
+            throw new CustomBadRequestException("BAD REQUEST", bindingErrors);
         }
     }
 }

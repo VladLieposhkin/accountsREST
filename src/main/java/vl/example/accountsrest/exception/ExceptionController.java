@@ -1,6 +1,7 @@
 package vl.example.accountsrest.exception;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -9,14 +10,21 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionController {
 
     @ExceptionHandler(CustomNotFoundException.class)
-    public ResponseEntity<String> handleNotFoundException(CustomNotFoundException exception) {
+    public ResponseEntity<ProblemDetail> handleNotFoundException(CustomNotFoundException exception) {
 
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, exception.getMessage()));
     }
 
     @ExceptionHandler(CustomBadRequestException.class)
-    public ResponseEntity<String>  handleBadRequestException(CustomBadRequestException exception) {
+    public ResponseEntity<ProblemDetail> handleBadRequestException(CustomBadRequestException exception) {
 
-       return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
+        problemDetail.setProperty("errors", exception.getErrors());
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(problemDetail);
     }
 }

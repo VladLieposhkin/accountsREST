@@ -11,6 +11,7 @@ public interface ClientService {
     ClientDTO create(ClientDTO clientDTO);
     ClientDTO update(ClientDTO clientDTO, Integer clientId);
     void delete(Integer clientId);
-//    boolean checkByEmail(String email, Integer id);
-//    boolean checkByName(String name, Integer id);
+    boolean checkById(Integer clientId);
+    boolean checkByEmail(String email, Integer id);
+    boolean checkByName(String name, Integer id);
 }

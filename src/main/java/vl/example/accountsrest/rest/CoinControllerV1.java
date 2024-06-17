@@ -35,7 +35,6 @@ public class CoinControllerV1 {
     @PostMapping
     public ResponseEntity<CoinDTO> create(@RequestBody @Valid CoinDTO coinDTO,
                                           BindingResult bindingResult) {
-
         coinValidator.validate(coinDTO, bindingResult);
         return new ResponseEntity<>(coinService.create(coinDTO), HttpStatus.CREATED);
     }
@@ -44,7 +43,6 @@ public class CoinControllerV1 {
     public ResponseEntity<CoinDTO> update(@PathVariable("id") Integer coinId,
                                           @RequestBody @Valid CoinDTO coinDTO,
                                           BindingResult bindingResult) {
-
         coinValidator.validate(coinDTO, bindingResult);
         return new ResponseEntity<>(coinService.update(coinDTO, coinId), HttpStatus.OK);
     }

@@ -1,20 +1,24 @@
 package vl.example.accountsrest.validator;
 
-import vl.example.accountsrest.dto.AccountDTO;
-import vl.example.accountsrest.exception.CustomBadRequestException;
-import vl.example.accountsrest.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import vl.example.accountsrest.dto.AccountDTO;
+import vl.example.accountsrest.exception.CustomBadRequestException;
+import vl.example.accountsrest.service.AccountService;
+import vl.example.accountsrest.service.ClientService;
+import vl.example.accountsrest.service.CoinService;
 
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class AccountValidator implements Validator {
 
     private final AccountService accountService;
+    private final CoinService coinService;
+    private final ClientService clientService;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -26,21 +30,28 @@ public class AccountValidator implements Validator {
 
         AccountDTO accountDTO = (AccountDTO) target;
 
-        if (accountDTO.getClient().getId() == null)
+        if (accountDTO.getClient().getId() == null) {
             errors.rejectValue("client", "", "Field Client should have a value");
+        }
+        else if (!clientService.checkById(accountDTO.getClient().getId())) {
+            errors.rejectValue("client", "", "Client not found. ID = " + accountDTO.getClient().getId());
+        }
 
-        if (accountDTO.getCoin().getId() == null)
+        if (accountDTO.getCoin().getId() == null) {
             errors.rejectValue("coin", "", "Field Coin should have a value");
+        }
+        else if (!coinService.checkById(accountDTO.getClient().getId())) {
+            errors.rejectValue("coin", "", "Coin not found. ID = " + accountDTO.getCoin().getId());
+        }
 
-//        if (accountService.checkByNumber(accountDTO.getNumber(), accountDTO.getId()))
-//            errors.rejectValue("number", "", "Account with same Number already present");
+        if (accountService.checkByNumber(accountDTO.getNumber(), accountDTO.getId()))
+            errors.rejectValue("number", "", "Account with same Number already present");
 
         if (errors.hasErrors()) {
-            String errorMessage = errors.getFieldErrors().stream()
-                    .map(e -> String.join(" - ", e.getField(), e.getDefaultMessage()))
-                    .collect(Collectors.joining("\n"));
-
-            throw new CustomBadRequestException(errorMessage);
+            List<String> bindingErrors = errors.getFieldErrors().stream()
+                    .map(e -> e.getDefaultMessage())
+                    .toList();
+            throw new CustomBadRequestException("BAD REQUEST", bindingErrors);
         }
     }
 }
