@@ -14,7 +14,6 @@ import vl.example.accountsrest.exception.CustomNotFoundException;
 import vl.example.accountsrest.mapper.CoinMapper;
 import vl.example.accountsrest.repository.CoinRepository;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
