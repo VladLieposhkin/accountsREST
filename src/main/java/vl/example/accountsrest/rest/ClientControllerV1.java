@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import vl.example.accountsrest.dto.ClientDTO;
+import vl.example.accountsrest.dto.ClientDetailedDTO;
 import vl.example.accountsrest.service.ClientService;
 import vl.example.accountsrest.validator.ClientValidator;
 
@@ -27,11 +28,9 @@ public class ClientControllerV1 {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClientDTO> findOne(@PathVariable("id") Integer clientId) {
-//    public ResponseEntity<ClientDetailedDTO> findOne(@PathVariable("id") Integer clientId) {
+    public ResponseEntity<ClientDetailedDTO> findOne(@PathVariable("id") Integer clientId) {
 
-//        return new ResponseEntity<>(clientService.findOneWithDetails(clientId), HttpStatus.OK);
-        return new ResponseEntity<>(clientService.findOne(clientId), HttpStatus.OK);
+        return new ResponseEntity<>(clientService.findOneWithDetails(clientId), HttpStatus.OK);
     }
 
     @PostMapping

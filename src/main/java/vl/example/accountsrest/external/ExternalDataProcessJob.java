@@ -13,16 +13,17 @@ import java.util.concurrent.TimeUnit;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class ExternalDataProcessingJob {
+public class ExternalDataProcessJob {
 
     private final ExternalClient externalClient;
     private final CoinService coinService;
     private final AccountService accountService;
 
-    @Scheduled(fixedDelay = 60, initialDelay = 10, timeUnit = TimeUnit.SECONDS)
+//    @Scheduled(fixedDelayString = "${accounts.services.external.retrieving.fixed-delay:}", initialDelayString = "${accounts.services.external.retrieving.initial-delay:}", timeUnit = TimeUnit.SECONDS)
+    @Scheduled(fixedDelay = 60, initialDelay = 5, timeUnit = TimeUnit.SECONDS)
     public void processExternalData() {
 
-        log.info("RETRIEVING: Started...");
+        log.info("RETRIEVING OF EXTERNAL DATA: Started...");
 
         CompletableFuture.supplyAsync(externalClient::getExternalData)
                 .thenApply(list ->
@@ -34,15 +35,16 @@ public class ExternalDataProcessingJob {
                                         .size()
                 )
                 .exceptionally(exception -> {
-                    log.info("RETRIEVING: Unable to process data from remote host, {}", exception.getMessage());
+                    log.info("RETRIEVING OF EXTERNAL DATA: Unable to process data from remote host, {}", exception.getMessage());
                     return 0;
                 })
-                .thenAccept(result -> log.info("RETRIEVING: Data about {} coins processed", result))
+                .thenAccept(result -> log.info("RETRIEVING OF EXTERNAL DATA: Data about {} coins processed", result))
                 .join();
     }
 
-    @Scheduled(fixedDelay = 60, initialDelay = 10, timeUnit = TimeUnit.SECONDS)
-    public void processInternalData() {
+//    @Scheduled(fixedDelayString = "${accounts.services.external.checking.fixed-delay:}", initialDelayString = "${accounts.services.external.checking.initial-delay:}", timeUnit = TimeUnit.SECONDS)
+@Scheduled(fixedDelay = 60, initialDelay = 5, timeUnit = TimeUnit.SECONDS)
+public void processInternalData() {
 
         log.info("CHECKING: Started...");
 

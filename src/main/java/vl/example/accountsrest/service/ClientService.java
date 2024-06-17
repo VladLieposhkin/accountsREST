@@ -1,12 +1,13 @@
 package vl.example.accountsrest.service;
 
 import vl.example.accountsrest.dto.ClientDTO;
+import vl.example.accountsrest.dto.ClientDetailedDTO;
 
 import java.util.List;
 
 public interface ClientService {
     ClientDTO findOne(Integer clientId);
-//    ClientDetailedDTO findOneWithDetails(Integer clientId);
+    ClientDetailedDTO findOneWithDetails(Integer clientId);
     List<ClientDTO> findAll();
     ClientDTO create(ClientDTO clientDTO);
     ClientDTO update(ClientDTO clientDTO, Integer clientId);

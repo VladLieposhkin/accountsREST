@@ -1,16 +1,14 @@
 package vl.example.accountsrest.validator;
 
-import vl.example.accountsrest.dto.ClientDTO;
-import vl.example.accountsrest.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import vl.example.accountsrest.dto.ClientDTO;
 import vl.example.accountsrest.exception.CustomBadRequestException;
+import vl.example.accountsrest.service.ClientService;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vl.example.accountsrest.dto.ClientDTO;
+import vl.example.accountsrest.dto.ClientDetailedDTO;
 import vl.example.accountsrest.entity.Client;
 import vl.example.accountsrest.entity.Status;
 import vl.example.accountsrest.exception.CustomNotFoundException;
@@ -52,13 +53,13 @@ public class ClientServiceImpl implements ClientService {
                 .orElseThrow(() -> new CustomNotFoundException(NOT_FOUND + clientId));
     }
 
-//    @Override
-//    public ClientDetailedDTO findOneWithDetails(Long clientId) {
-//
-//        return clientRepository.findByIdWithDetails(clientId)
-//                .map(clientDetailedMapper::toDetailedDTO)
-//                .orElseThrow(() -> new CustomNotFoundException(NOT_FOUND + clientId));
-//    }
+    @Override
+    public ClientDetailedDTO findOneWithDetails(Integer clientId) {
+
+        return clientRepository.findByIdWithDetails(clientId)
+                .map(clientDetailedMapper::toDetailedDTO)
+                .orElseThrow(() -> new CustomNotFoundException(NOT_FOUND + clientId));
+    }
 
     @Transactional
     @Override

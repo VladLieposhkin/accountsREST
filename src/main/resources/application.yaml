@@ -5,8 +5,12 @@ accounts:
   services:
     external:
       url:  https://api.coinlore.net/api/ticker
-
-
+#      retrieving:
+#        fixed-delay: PT60
+#        initial-delay: PT10
+#      checking:
+#        fixed-delay: 60
+#        initial-delay: 15
 
 spring:
   application:
