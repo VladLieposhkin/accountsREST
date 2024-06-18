@@ -19,7 +19,7 @@ public class AccountDTO {
     private CoinDTO coin;
 
     @NotEmpty(message = "Field Number should not be empty")
-    @Size(min = 2, max = 50, message = "Field Number should be between 2 and 50 characters")
+    @Size(min = 3, max = 50, message = "Field Number should be between 2 and 50 characters")
     private String number;
 
     private Float quantity;

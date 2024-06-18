@@ -15,11 +15,11 @@ public class CoinDTO {
     private Integer id;
 
     @NotEmpty(message = "Field Code should not be empty")
-    @Size(min = 2, max = 5, message = "Field Code should be between 2 and 5 characters")
+    @Size(min = 1, max = 5, message = "Field Code should be between 2 and 5 characters")
     private String code;
 
     @NotEmpty(message = "Field Name should not be empty")
-    @Size(min = 2, max = 50, message = "Field Name should be between 2 and 50 characters")
+    @Size(min = 3, max = 50, message = "Field Name should be between 2 and 50 characters")
     private String name;
 
     private Float price;

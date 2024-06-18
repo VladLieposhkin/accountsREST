@@ -1,28 +1,29 @@
-package vl.example.accountsrest.rest;
+package vl.example.accountsrest.it;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.validation.Errors;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import vl.example.accountsrest.dto.ClientDTO;
-import vl.example.accountsrest.entity.Status;
-import vl.example.accountsrest.service.ClientService;
-import vl.example.accountsrest.validator.ClientValidator;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-@WebMvcTest(ClientRestControllerV1.class)
-class ClientControllerV1Tests {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
+@Testcontainers
+@ActiveProfiles("test")
+@Transactional
+public class ClientRestControllerV1IT {
 
     @Autowired
     private MockMvc mockMvc;
@@ -30,34 +31,20 @@ class ClientControllerV1Tests {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
-    private ClientService clientService;
-
-    @MockBean
-    private ClientValidator clientValidator;
-
     @Test
-    void givenClientToCreateDTO_whenCreate_thenSuccessResponse() throws Exception{
-        // given
+    public void givenClientToCreateDTO_whenCreate_thenSuccessResponse() throws Exception {
+        //given
         ClientDTO clientToCreateDTO = ClientDTO.builder()
                 .name("TEST_CLIENT")
                 .email("TC@mail.com")
                 .build();
-        ClientDTO createdClientDTO = ClientDTO.builder()
-                .id(1)
-                .name("TEST_CLIENT")
-                .email("TC@mail.com")
-                .status(Status.ACTIVE)
-                .build();
-        BDDMockito.doNothing().when(clientValidator).validate(any(ClientDTO.class), any(Errors.class));
-        BDDMockito.given(clientService.create(any(ClientDTO.class))).willReturn(createdClientDTO);
-        // when
+        //when
         ResultActions result = mockMvc.perform(post("/api/v1/clients")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(clientToCreateDTO)));
-        // then
+        //then
         result
-                .andDo(MockMvcResultHandlers.print())
+                .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.notNullValue()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", CoreMatchers.is("TEST_CLIENT")))

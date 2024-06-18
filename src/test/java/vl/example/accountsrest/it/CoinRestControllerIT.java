@@ -1,28 +1,29 @@
-package vl.example.accountsrest.rest;
+package vl.example.accountsrest.it;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.validation.Errors;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import vl.example.accountsrest.dto.CoinDTO;
-import vl.example.accountsrest.entity.Status;
-import vl.example.accountsrest.service.CoinService;
-import vl.example.accountsrest.validator.CoinValidator;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-@WebMvcTest(CoinRestControllerV1.class)
-class CoinControllerV1Tests {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
+@Testcontainers
+@ActiveProfiles("test")
+@Transactional
+public class CoinRestControllerIT extends AbstractRestControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
@@ -30,35 +31,20 @@ class CoinControllerV1Tests {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
-    private CoinService coinService;
-
-    @MockBean
-    private CoinValidator coinValidator;
-
     @Test
     public void givenCoinToCreateDTO_whenCreate_thenSuccessResponse() throws Exception {
-        // given
-        CoinDTO coinToCreateDTO = CoinDTO.builder()
+        //given
+        CoinDTO dto = CoinDTO.builder()
                 .code("100")
                 .name("TEST_COIN")
                 .build();
-        CoinDTO createdCoinDTO = CoinDTO.builder()
-                .id(1)
-                .code("100")
-                .name("TEST_COIN")
-                .status(Status.ACTIVE)
-                .build();
-        BDDMockito.doNothing().when(coinValidator).validate(any(CoinDTO.class), any(Errors.class));
-        BDDMockito.given(coinService.create(any(CoinDTO.class)))
-                .willReturn(createdCoinDTO);
-        // when
+        //when
         ResultActions result = mockMvc.perform(post("/api/v1/coins")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(coinToCreateDTO)));
-        // then
+                .content(objectMapper.writeValueAsString(dto)));
+        //then
         result
-                .andDo(MockMvcResultHandlers.print())
+                .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.notNullValue()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code", CoreMatchers.is("100")))

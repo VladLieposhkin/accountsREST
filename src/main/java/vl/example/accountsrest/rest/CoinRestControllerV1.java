@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/coins")
-public class CoinControllerV1 {
+public class CoinRestControllerV1 {
 
     private final CoinService coinService;
     private final CoinValidator coinValidator;

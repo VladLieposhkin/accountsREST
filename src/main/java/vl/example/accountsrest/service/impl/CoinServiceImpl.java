@@ -25,6 +25,17 @@ public class CoinServiceImpl implements CoinService {
     private final CoinRepository coinRepository;
     private final CoinMapper coinMapper;
 
+    @Transactional
+    @Override
+    public CoinDTO create(CoinDTO coinDTO) {
+
+        return Optional.of(coinDTO)
+                .map(coinMapper::fromDTO)
+                .map(coinRepository::save)
+                .map(coinMapper::toDTO)
+                .orElseThrow(() -> new CustomBadRequestException("Can't create Coin", Collections.EMPTY_LIST));
+    }
+
     @Override
     public List<CoinDTO> findAll() {
 
@@ -39,17 +50,6 @@ public class CoinServiceImpl implements CoinService {
         return coinRepository.findById(coinId)
                 .map(coinMapper::toDTO)
                 .orElseThrow(() -> new CustomNotFoundException(NOT_FOUND + coinId));
-    }
-
-    @Transactional
-    @Override
-    public CoinDTO create(CoinDTO coinDTO) {
-
-        return Optional.of(coinDTO)
-                .map(coinMapper::fromDTO)
-                .map(coinRepository::save)
-                .map(coinMapper::toDTO)
-                .orElseThrow(() -> new CustomBadRequestException("Can't create Coin", Collections.EMPTY_LIST));
     }
 
     @Transactional

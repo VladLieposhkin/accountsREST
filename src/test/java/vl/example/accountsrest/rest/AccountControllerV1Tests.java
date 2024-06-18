@@ -1,6 +1,5 @@
 package vl.example.accountsrest.rest;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
@@ -16,16 +15,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.validation.Errors;
 import vl.example.accountsrest.dto.AccountDTO;
 import vl.example.accountsrest.dto.ClientDTO;
-import vl.example.accountsrest.entity.Account;
 import vl.example.accountsrest.entity.Status;
 import vl.example.accountsrest.service.AccountService;
 import vl.example.accountsrest.validator.AccountValidator;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@WebMvcTest(AccountControllerV1.class)
+@WebMvcTest(AccountRestControllerV1.class)
 class AccountControllerV1Tests {
 
     @Autowired

@@ -1,8 +1,5 @@
 package vl.example.accountsrest.rest;
 
-import vl.example.accountsrest.dto.AccountDTO;
-import vl.example.accountsrest.service.AccountService;
-import vl.example.accountsrest.validator.AccountValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,13 +7,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import vl.example.accountsrest.dto.AccountDTO;
+import vl.example.accountsrest.service.AccountService;
+import vl.example.accountsrest.validator.AccountValidator;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/api/v1/accounts")
-public class AccountControllerV1 {
+public class AccountRestControllerV1 {
 
     private final AccountService accountService;
     private final AccountValidator accountValidator;
