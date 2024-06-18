@@ -43,8 +43,8 @@ public class AccountMapper {
                 .quantity(object.getQuantity())
                 .price(object.getPrice())
                 .amount(object.getAmount())
-                .createdAt(object.getCreatedAt())
-                .updatedAt(object.getUpdatedAt())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .status(Status.ACTIVE)
                 .build();
     }
