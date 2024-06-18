@@ -54,5 +54,4 @@ public class AccountControllerV1 {
         accountService.delete(accountId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

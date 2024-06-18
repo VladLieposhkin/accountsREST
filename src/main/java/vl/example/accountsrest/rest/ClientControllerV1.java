@@ -21,6 +21,13 @@ public class ClientControllerV1 {
     private final ClientService clientService;
     private final ClientValidator clientValidator;
 
+    @PostMapping
+    public ResponseEntity<ClientDTO> create(@RequestBody @Valid ClientDTO clientDTO,
+                                            BindingResult bindingResult) {
+        clientValidator.validate(clientDTO, bindingResult);
+        return new ResponseEntity<>(clientService.create(clientDTO), HttpStatus.CREATED);
+    }
+
     @GetMapping
     public ResponseEntity<List<ClientDTO>> findAll() {
 
@@ -31,13 +38,6 @@ public class ClientControllerV1 {
     public ResponseEntity<ClientDetailedDTO> findOne(@PathVariable("id") Integer clientId) {
 
         return new ResponseEntity<>(clientService.findOneWithDetails(clientId), HttpStatus.OK);
-    }
-
-    @PostMapping
-    public ResponseEntity<ClientDTO> create(@RequestBody @Valid ClientDTO clientDTO,
-                                            BindingResult bindingResult) {
-        clientValidator.validate(clientDTO, bindingResult);
-        return new ResponseEntity<>(clientService.create(clientDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

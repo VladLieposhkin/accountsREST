@@ -1,11 +1,11 @@
-spring:
-  datasource:
-    url: jdbc:tc:postgresql:16:///accounts?TC_DAEMON=true
-    username: accounts
-    password: accounts
-
 #spring:
-#  jpa:
-#    hibernate:
-#      ddl-auto: create
-#    show-sql: true
+#  datasource:
+#    url: jdbc:tc:postgresql:16:///accounts?TC_DAEMON=true
+#    username: accounts
+#    password: accounts
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true

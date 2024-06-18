@@ -20,6 +20,13 @@ public class CoinControllerV1 {
     private final CoinService coinService;
     private final CoinValidator coinValidator;
 
+    @PostMapping
+    public ResponseEntity<CoinDTO> create(@RequestBody @Valid CoinDTO coinDTO,
+                                          BindingResult bindingResult) {
+        coinValidator.validate(coinDTO, bindingResult);
+        return new ResponseEntity<>(coinService.create(coinDTO), HttpStatus.CREATED);
+    }
+
     @GetMapping
     public ResponseEntity<List<CoinDTO>> findAll() {
 
@@ -30,13 +37,6 @@ public class CoinControllerV1 {
     public ResponseEntity<CoinDTO> findOne(@PathVariable("id") Integer coinId) {
 
        return new ResponseEntity<>(coinService.findOne(coinId), HttpStatus.OK);
-    }
-
-    @PostMapping
-    public ResponseEntity<CoinDTO> create(@RequestBody @Valid CoinDTO coinDTO,
-                                          BindingResult bindingResult) {
-        coinValidator.validate(coinDTO, bindingResult);
-        return new ResponseEntity<>(coinService.create(coinDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
