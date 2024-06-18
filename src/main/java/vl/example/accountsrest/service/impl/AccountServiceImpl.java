@@ -8,11 +8,13 @@ import vl.example.accountsrest.dto.AccountDTO;
 import vl.example.accountsrest.entity.Account;
 import vl.example.accountsrest.entity.Coin;
 import vl.example.accountsrest.entity.Status;
+import vl.example.accountsrest.exception.CustomBadRequestException;
 import vl.example.accountsrest.exception.CustomNotFoundException;
 import vl.example.accountsrest.mapper.AccountMapper;
 import vl.example.accountsrest.repository.AccountRepository;
 import vl.example.accountsrest.service.AccountService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +26,17 @@ public class AccountServiceImpl implements AccountService {
     private final String NOT_FOUND = "Account not found. ID = ";
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
+
+    @Transactional
+    @Override
+    public AccountDTO create(AccountDTO accountDTO) {
+
+        return Optional.of(accountDTO)
+                .map(accountMapper::fromDTO)
+                .map(accountRepository::save)
+                .map(accountMapper::toDTO)
+                .orElseThrow(() -> new CustomBadRequestException("Can't create Coin", Collections.EMPTY_LIST));
+    }
 
     @Override
     public AccountDTO findOne(Integer accountId) {
@@ -39,17 +52,6 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.findAll().stream()
                 .map(accountMapper::toDTO)
                 .toList();
-    }
-
-    @Transactional
-    @Override
-    public AccountDTO create(AccountDTO accountDTO) {
-
-        return Optional.of(accountDTO)
-                .map(accountMapper::fromDTO)
-                .map(accountRepository::save)
-                .map(accountMapper::toDTO)
-                .orElseThrow();
     }
 
     @Transactional

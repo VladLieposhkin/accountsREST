@@ -14,8 +14,8 @@ public class AbstractRestControllerIT {
         POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>("postgres:latest")
                 .withUsername("accounts")
                 .withPassword("accounts")
-                .withDatabaseName("accounts")
-                .withReuse(true);
+                .withDatabaseName("accounts");
+//                .withReuse(true);
 
         POSTGRE_SQL_CONTAINER.start();
     }

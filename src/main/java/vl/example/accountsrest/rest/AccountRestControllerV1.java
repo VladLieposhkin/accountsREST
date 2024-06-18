@@ -14,7 +14,7 @@ import vl.example.accountsrest.validator.AccountValidator;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 @RequestMapping("/api/v1/accounts")
 public class AccountRestControllerV1 {
 

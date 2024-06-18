@@ -7,12 +7,14 @@ import vl.example.accountsrest.dto.ClientDTO;
 import vl.example.accountsrest.dto.ClientDetailedDTO;
 import vl.example.accountsrest.entity.Client;
 import vl.example.accountsrest.entity.Status;
+import vl.example.accountsrest.exception.CustomBadRequestException;
 import vl.example.accountsrest.exception.CustomNotFoundException;
 import vl.example.accountsrest.mapper.ClientDetailedMapper;
 import vl.example.accountsrest.mapper.ClientMapper;
 import vl.example.accountsrest.repository.ClientRepository;
 import vl.example.accountsrest.service.ClientService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +36,7 @@ public class ClientServiceImpl implements ClientService {
                 .map(clientMapper::fromDTO)
                 .map(clientRepository::save)
                 .map(clientMapper::toDTO)
-                .orElseThrow();
+                .orElseThrow(() -> new CustomBadRequestException("Can't create Coin", Collections.EMPTY_LIST));
     }
 
     @Override
