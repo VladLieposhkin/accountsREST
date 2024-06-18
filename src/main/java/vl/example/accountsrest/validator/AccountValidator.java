@@ -40,7 +40,7 @@ public class AccountValidator implements Validator {
         if (accountDTO.getCoin().getId() == null) {
             errors.rejectValue("coin", "", "Field Coin should have a value");
         }
-        else if (!coinService.checkById(accountDTO.getClient().getId())) {
+        else if (!coinService.checkById(accountDTO.getCoin().getId())) {
             errors.rejectValue("coin", "", "Coin not found. ID = " + accountDTO.getCoin().getId());
         }
 
